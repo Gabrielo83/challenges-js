@@ -9,39 +9,39 @@ Mostrar un mensaje (alert) indicando que se ha registrado correctamente.
 */
 
 //creamos variables globales para acceder desde el while
-let isRegistred, userRegister, passRegister;
-const welcome = confirm("Bienvenido, para registrarte haz click en OK");
+// let isRegistred, userRegister, passRegister;
+// const welcome = confirm("Bienvenido, para registrarte haz click en OK");
 
-do {
-  if (welcome) {
-    //el flujo do while va a iterar cada vez que el registro de usuario sea incorrecto, en caso correcto no pasa por el userRegister
-    //sino que pasa a el passRegister
-    if (!userRegister) {
-      userRegister = prompt("Ingrese un nombre de usuario");
-    }
-    if (userRegister.length >= 3) {
-      userRegister = userRegister.toLowerCase();
-      passRegister = prompt("Ingresa una contraseña");
-      if (passRegister.length >= 6) {
-        alert("Se completo el registo exitosamente");
-        //si se completa el registro exitosamente se asigna true a la variable global isRegistred
-        isRegistred = true;
-      } else {
-        alert("Debes ingresar una contraseña de al menos 6 caracteres");
-        // en caso de ingresar una contraseña menor a 6 caracteres se resetea el passRegister a null asi se vuelve false y permite
-        // que itere para solicitar nuevamente una contraseña
-        passRegister = null;
-      }
-    } else {
-      alert("El nombre de usuario tiene que tener mas de 3 caracteres");
-      userRegister = null;
-    }
-  } else {
-    alert("OK, te esperamos cuando gustes");
-  }
-} while (welcome && (!userRegister || !passRegister));
+// do {
+//   if (welcome) {
+//     //el flujo do while va a iterar cada vez que el registro de usuario sea incorrecto, en caso correcto no pasa por el userRegister
+//     //sino que pasa a el passRegister
+//     if (!userRegister) {
+//       userRegister = prompt("Ingrese un nombre de usuario");
+//     }
+//     if (userRegister.length >= 3) {
+//       userRegister = userRegister.toLowerCase();
+//       passRegister = prompt("Ingresa una contraseña");
+//       if (passRegister.length >= 6) {
+//         alert("Se completo el registo exitosamente");
+//         //si se completa el registro exitosamente se asigna true a la variable global isRegistred
+//         isRegistred = true;
+//       } else {
+//         alert("Debes ingresar una contraseña de al menos 6 caracteres");
+//         // en caso de ingresar una contraseña menor a 6 caracteres se resetea el passRegister a null asi se vuelve false y permite
+//         // que itere para solicitar nuevamente una contraseña
+//         passRegister = null;
+//       }
+//     } else {
+//       alert("El nombre de usuario tiene que tener mas de 3 caracteres");
+//       userRegister = null;
+//     }
+//   } else {
+//     alert("OK, te esperamos cuando gustes");
+//   }
+// } while (welcome && (!userRegister || !passRegister));
 
-/*2) LOGIN
+/*2) EJERCICIO DE LOGIN
 Cuando el registro este completo mostrar al usuario si desea iniciar sesión.
 ACEPTAR: pedirle nombre de usuario y contraseña para registrarse
 si son incorrectos alert con mje de error
@@ -81,3 +81,59 @@ normalizar los datos
 //     }
 //   } while (login && (!userLogin || !userPass));
 // }
+
+/*3) EJERCICIO DE TAREAS BÁSICO*/
+
+let tareas = [];
+function ingresarTareas() {
+  let bienvenida = confirm("Bienvenido! Ok si quiere iniciar");
+
+  do {
+    if (bienvenida) {
+      let opciones = prompt(
+        "Bienvenido!! Ingresa una opción de tareas para poder continuar \n1. INGRESA \n2. EDITA \n3. VER TAREAS \n4. SALIR"
+      );
+
+      switch (opciones) {
+        case "1":
+          let tarea = prompt("Ingresa una tarea");
+          tareas.push(tarea);
+          alert(tareas);
+          // console.log(tareas);
+          ingresarTareas();
+          break;
+        case "2":
+          let opcionEdicion = prompt(`Elija cual tarea editar: ${tareas}`);
+          let indexTarea = tareas.indexOf(opcionEdicion);
+          console.log(indexTarea);
+
+          if (indexTarea != -1) {
+            let tareaEditada = prompt(
+              "Ingresar la edición de la tarea seleccionada: "
+            );
+            tareas[indexTarea] = tareaEditada;
+            alert("Tarea editada!");
+            console.log("editado ", tareas);
+            ingresarTareas();
+          } else {
+            alert("No existe esa tarea, vuelva a intentar");
+            ingresarTareas();
+          }
+          break;
+        case "3":
+          alert(`Las tareas son: ${tareas}`);
+          ingresarTareas();
+          break;
+        case "4":
+          alert("Hasta Pronto!");
+          break;
+        default:
+          alert("Opción no válida");
+          ingresarTareas();
+          break;
+      }
+    }
+  } while (opciones.toLocaleLowerCase() !== "4");
+}
+
+ingresarTareas();
